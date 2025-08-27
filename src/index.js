@@ -2,14 +2,15 @@ const express = require("express") //Criar servidor
 const mongoose = require("mongoose") //ODM P/MongoDB
 const dotenv = require("dotenv") // variaveis de ambiente
 const cors = require("cors") //liberar acesso externo
-const userRoutes = require("./routes/userRoutes"); //Import router
+const userRoutes = require("./routes/userRoutes"); //Import routas do usuario
+const productRoutes = require("./routes/productRoutes"); //Import routas dos produtos
 
 dotenv.config(); //carrega variaveis do .env
 const app = express() //Usando as func do express na var "app."
 app.use(express.json()); //permite receber JSON no body
 app.use(cors()); //acesso de outros dominios
 
-app.use(userRoutes); // Ter acesso as rotas.
+app.use(userRoutes, productRoutes); // Ter acesso as rotas do sistema.
 
 //Rota teste
 app.get('/', (req, res) => {
