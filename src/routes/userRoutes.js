@@ -33,8 +33,8 @@ router.post("/login", async (req, res) => {
     try {
         const { email, senha } = req.body
 
-        //Verifica se o usuario existe
-        const user = await User.findOne({ email }); //Get banco de dados com where em 'email', retornar todos os dados do user pra varaivel
+        const user = await User.findOne({ email });//Verifica se o usuario existe pelo email
+
         if (!user) return res.status(400).json({ message: "Usuário não encontrado" })
 
         // Verifica a senha

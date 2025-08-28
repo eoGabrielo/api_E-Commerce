@@ -41,9 +41,37 @@ router.get('/products/:id', verifyToken, async (req, res) => {
 router.put("/products", verifyToken, async(req, res) => {
     try{
         const {nome, descricao, preco, estoque} = req.body
-        
+
+        //Atualiza o produto
+        const updateProduct = await Product.findByIdAndUpdate(req.params.id, {nome, descricao, preco, estoque}, 
+        {new: true, //retorna o documento já atualizado
+        runValidators: true} //Mantem a regra do schema
+    );
+
+        if(!updateProduct){
+            return res.status(404).json({message: "Produto não encontrado"})
+        }
+
+        res.json(updateProduct); //Retorna produto atualizado no res
     }catch(err){
         res.status(500).json({message: "Erro ao atualizar o produto.", error: err.message});
+    }
+})
+
+router.delete("/products/:id", verifyToken, async(req, res) => {
+    try{
+        const id = req.params.id; //Pega ID da URL
+        
+        const deleteProduct = await Product.findByIdAndDelete(id);
+
+        //Caso não ache o produto
+        if(!deleteProduct){
+            res.status(404).json({message: "Produto não encontrado"})
+        };
+
+        res.json({message: "Produto deletado com sucesso"});
+    }catch(err){
+        res.status(500).json({message: "Falha ao excluir o produto.", error: err.message})
     }
 })
 
