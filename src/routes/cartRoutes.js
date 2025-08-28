@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const verifyToken = require("../middleware/auth");
 const Cart = require("../models/Cart");
-const Product = require("../models/Product");
+const verifyToken = require("../middlewares/auth");
 
 // Adicionar produto ao carrinho
 router.post("/cart", verifyToken, async (req, res) => {
@@ -40,8 +39,7 @@ router.post("/cart", verifyToken, async (req, res) => {
 //Lista itens do carrinho
 router.get("/cart", verifyToken, async (req, res) => {
     try {
-        const userId = req.user.id;
-        const cart = await Cart.findOne(userId).populate("items.product");//.populate = retornar todos os dados com base no id e na config correta no Schema.
+        const cart = await Cart.findOne({user: req.user.id}).populate("items.product");//.populate = retornar todos os dados com base no id e na config correta no Schema.
         res.json(cart);
     } catch (err) {
         res.status(500).json({ message: "Erro ao listar carrinho", error: err.message });
@@ -64,3 +62,5 @@ router.delete("/cart/:productId", verifyToken, async (req, res) => {
         res.status(500).json({ message: "Erro ao remover produto do carrinho", error: err.message });
     }
 });
+
+module.exports = router;
