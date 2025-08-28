@@ -24,7 +24,7 @@ router.get('/products', async (req, res) => {
     }
 })
 
-//Listar produtos por ID
+//Lista produto unico pelo ID
 router.get('/products/:id', verifyToken, async (req, res) => {
     try{
         const productId = req.params.id; //Pega ID da URL
@@ -37,13 +37,15 @@ router.get('/products/:id', verifyToken, async (req, res) => {
     }
 });
 
-//Atualiza produto de forma Completa com PUT
-router.put("/products", verifyToken, async(req, res) => {
+//Atualiza produto de forma Completa
+router.put("/products/:id", verifyToken, async(req, res) => {
     try{
         const {nome, descricao, preco, estoque} = req.body
 
+        const id = req.params.id; //Pega ID da URL
+
         //Atualiza o produto
-        const updateProduct = await Product.findByIdAndUpdate(req.params.id, {nome, descricao, preco, estoque}, 
+        const updateProduct = await Product.findByIdAndUpdate(id, {nome, descricao, preco, estoque}, 
         {new: true, //retorna o documento já atualizado
         runValidators: true} //Mantem a regra do schema
     );
@@ -58,6 +60,7 @@ router.put("/products", verifyToken, async(req, res) => {
     }
 })
 
+//Deleta produto pelo ID
 router.delete("/products/:id", verifyToken, async(req, res) => {
     try{
         const id = req.params.id; //Pega ID da URL
