@@ -5,13 +5,14 @@ const cors = require("cors") //liberar acesso externo
 const userRoutes = require("./routes/userRoutes"); //Import routas do usuario
 const productRoutes = require("./routes/productRoutes"); //Import routas dos produtos
 const cartRoutes = require("./routes/cartRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 
 dotenv.config(); //carrega variaveis do .env
 const app = express() //Usando as func do express na var "app."
 app.use(express.json()); //permite receber JSON no body
 app.use(cors()); //acesso de outros dominios
 
-app.use(userRoutes, productRoutes, cartRoutes); // Ter acesso as rotas do sistema.
+app.use(userRoutes, productRoutes, cartRoutes, orderRoutes); // Ter acesso as rotas do sistema.
 
 //Rota teste
 app.get('/', (req, res) => {
