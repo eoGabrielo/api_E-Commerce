@@ -49,8 +49,7 @@ router.get("/cart", verifyToken, async (req, res) => {
 //Remover produto do carrinho
 router.delete("/cart/:productId", verifyToken, async (req, res) => {
     try {
-        const id = req.user.id;
-        const cart = await Cart.findOne(id);
+        const cart = await Cart.findOne({user: req.user.id});
 
         if (!cart) {
             return res.status(404).json({ message: "Carrinho não encontrado" });
