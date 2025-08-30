@@ -1,17 +1,19 @@
-# E-commerce API
 
-API de e-commerce construída com **Node.js**, **Express** e **MongoDB**, incluindo funcionalidades de usuários, produtos, carrinho e pedidos.
+# 🛒 E-commerce API
+
+API de e-commerce construída com **Node.js**, **Express** e **MongoDB**, organizada na arquitetura **MVC** (Model-View-Controller).  
+O projeto inclui funcionalidades de **usuários, produtos, carrinho e pedidos**, além de autenticação JWT e proteção de rotas.
 
 ---
 
 ## 🚀 Funcionalidades
 
-### Usuários
-- Registro (`/register`) com senha criptografada.
-- Login (`/login`) com autenticação JWT.
+### 👤 Usuários
+- Registro (`/register`) com senha criptografada (**bcrypt**).
+- Login (`/login`) com autenticação **JWT**.
 - Proteção de rotas via middleware `verifyToken`.
 
-### Produtos
+### 📦 Produtos
 - CRUD completo:
   - Criar produto (`POST /products`)
   - Listar todos produtos (`GET /products`)
@@ -19,13 +21,13 @@ API de e-commerce construída com **Node.js**, **Express** e **MongoDB**, inclui
   - Atualizar produto (`PUT /products/:id`)
   - Deletar produto (`DELETE /products/:id`)
 
-### Carrinho
+### 🛒 Carrinho
 - Adicionar produto ao carrinho (`POST /cart`)
 - Listar itens do carrinho (`GET /cart`)
 - Remover produto do carrinho (`DELETE /cart/:productId`)
 - Carrinho sempre associado a um único usuário
 
-### Pedidos
+### 📑 Pedidos
 - Criar pedido a partir do carrinho (`POST /orders`)
 - Listar pedidos do usuário (`GET /orders`)
 - Detalhes de um pedido específico (`GET /orders/:id`)
@@ -33,48 +35,67 @@ API de e-commerce construída com **Node.js**, **Express** e **MongoDB**, inclui
 
 ---
 
-## 🛠 Tecnologias
-- Node.js
-- Express
-- MongoDB + Mongoose
-- JWT (JSON Web Tokens) para autenticação
-- Bcrypt para criptografia de senhas
-- Cors para requisições externas
-- Dotenv para variáveis de ambiente
+## 🛠 Tecnologias Utilizadas
+- **Node.js** + **Express**
+- **MongoDB** + **Mongoose**
+- **Arquitetura MVC**
+- **JWT (JSON Web Tokens)** → autenticação
+- **Bcrypt** → criptografia de senhas
+- **Cors** → habilitar requisições externas
+- **Dotenv** → variáveis de ambiente
 
 ---
 
-## ⚡ Estrutura do Projeto
+## ⚡ Estrutura do Projeto (MVC)
+
 ```
 
 src/
-├─ models/
+├─ controllers/        # Controladores → lógica das rotas
+│  ├─ userController.js
+│  ├─ productController.js
+│  ├─ cartController.js
+│  └─ orderController.js
+│
+├─ models/             # Modelos (dados/esquemas do MongoDB)
 │  ├─ User.js
 │  ├─ Product.js
 │  ├─ Cart.js
 │  └─ Order.js
-├─ routes/
+│
+├─ routes/             # Rotas → chamam os controllers
 │  ├─ auth.js
 │  ├─ products.js
 │  ├─ cart.js
 │  └─ orders.js
-├─ middlewares/
+│
+├─ middlewares/        # Middlewares (ex: autenticação)
 │  └─ auth.js
-└─ index.js
+│
+├─ config/             # Conexão com banco e configs
+│  └─ db.js
+│
+└─ index.js            # Arquivo principal do servidor
 
 ````
+
+👉 **Fluxo MVC:**  
+- O usuário faz uma requisição para uma **rota**.  
+- Essa rota chama o **controller**, que contém a lógica.  
+- O **controller** utiliza os **models** para acessar ou alterar dados no banco.  
+- A resposta (View) volta para o cliente em formato **JSON**.  
 
 ---
 
 ## ⚡ Rotas Principais
 
-### Usuários
+### 👤 Usuários
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
 | POST   | /register | Registrar usuário |
 | POST   | /login    | Login usuário e gerar token |
 
-### Produtos
+### 📦 Produtos
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
 | GET    | /products | Listar produtos |
@@ -83,14 +104,14 @@ src/
 | PUT    | /products/:id | Atualizar produto |
 | DELETE | /products/:id | Deletar produto |
 
-### Carrinho
+### 🛒 Carrinho
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
 | GET    | /cart | Listar itens do carrinho |
 | POST   | /cart | Adicionar produto ao carrinho |
 | DELETE | /cart/:productId | Remover produto do carrinho |
 
-### Pedidos
+### 📑 Pedidos
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
 | POST   | /orders | Criar pedido a partir do carrinho |
@@ -135,6 +156,9 @@ npm run dev
 
 ## 📦 Observações
 
-* Para rotas protegidas, envie o token JWT no header `Authorization` no formato: `Bearer SEU_TOKEN`.
-* Todos os dados sensíveis (senhas) são criptografados.
+* Para rotas protegidas, envie o token JWT no header `Authorization` no formato:
+  `Bearer SEU_TOKEN`.
+* Todos os dados sensíveis (senhas) são **criptografados**.
 * O carrinho é único por usuário, não é necessário criar/deletar manualmente.
+
+---
