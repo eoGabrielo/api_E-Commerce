@@ -6,69 +6,77 @@ const TaskController = require("../controllers/userController");
  * @swagger
  * tags:
  *   name: Usuários
- *   description: Rotas para registro e login de usuários
+ *   description: Rotas para registrar e autenticar usuários
  */
+
 
 /**
  * @swagger
  * /register:
  *   post:
- *     summary: Registrar um novo usuário
- *     tags: [Usuários]
+ *     summary: Registrar novo usuário
+ *     description: Cria um usuário com email e senha criptografada.
+ *     tags:
+ *       - Usuários
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
- *             required:
- *               - nome
- *               - email
- *               - senha
  *             properties:
  *               nome:
  *                 type: string
+ *                 example: "Gabrielo"
  *               email:
  *                 type: string
+ *                 example: "teste@teste.com"
  *               senha:
  *                 type: string
+ *                 example: "123456"
  *     responses:
  *       201:
- *         description: Usuário registrado com sucesso
+ *         description: Usuário criado com sucesso
  *       400:
- *         description: Dados inválidos ou usuário já existe
- *       500:
- *         description: Erro interno do servidor
+ *         description: Email já cadastrado
  */
+
 router.post("/register", TaskController.taskRegister);
 
 /**
  * @swagger
  * /login:
  *   post:
- *     summary: Login de usuário e geração de token JWT
- *     tags: [Usuários]
+ *     summary: Login de usuário
+ *     description: Valida email e senha e retorna um token JWT.
+ *     tags:
+ *       - Usuários
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
- *             required:
- *               - email
- *               - senha
  *             properties:
  *               email:
  *                 type: string
+ *                 example: "teste@teste.com"
  *               senha:
  *                 type: string
+ *                 example: "123456"
  *     responses:
  *       200:
- *         description: Login realizado com sucesso e token retornado
+ *         description: Login realizado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
  *       400:
  *         description: Usuário não encontrado ou senha incorreta
- *       500:
- *         description: Erro interno do servidor
  */
 router.post("/login", TaskController.taskLogin);
 

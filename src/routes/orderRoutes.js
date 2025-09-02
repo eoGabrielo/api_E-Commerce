@@ -7,40 +7,38 @@ const TaskController = require("../controllers/orderController");
  * @swagger
  * tags:
  *   name: Pedidos
- *   description: Rotas para criar, listar e atualizar pedidos
+ *   description: Rotas para gerenciar pedidos, criar, listar, detalhar e atualizar status
  */
+
 
 /**
  * @swagger
  * /orders:
  *   post:
- *     summary: Criar pedido a partir do carrinho do usuário
- *     tags: [Pedidos]
+ *     summary: Criar pedido a partir do carrinho
+ *     tags:
+ *       - Pedidos
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       201:
  *         description: Pedido criado com sucesso
- *       400:
- *         description: Carrinho vazio ou não encontrado
- *       500:
- *         description: Erro interno do servidor
  */
+
 router.post("/orders", verifyToken, TaskController.taskCreatedOrder);
 
 /**
  * @swagger
  * /orders:
  *   get:
- *     summary: Listar todos os pedidos do usuário logado
- *     tags: [Pedidos]
+ *     summary: Listar pedidos do usuário
+ *     tags:
+ *       - Pedidos
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Retorna lista de pedidos
- *       500:
- *         description: Erro interno do servidor
+ *         description: Lista de pedidos do usuário
  */
 router.get("/orders", verifyToken, TaskController.taskListAllOrders);
 
@@ -48,24 +46,22 @@ router.get("/orders", verifyToken, TaskController.taskListAllOrders);
  * @swagger
  * /orders/{id}:
  *   get:
- *     summary: Obter detalhes de um pedido específico
- *     tags: [Pedidos]
+ *     summary: Detalhes de um pedido específico
+ *     tags:
+ *       - Pedidos
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID do pedido
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: Retorna os detalhes do pedido
+ *         description: Pedido retornado com sucesso
  *       404:
  *         description: Pedido não encontrado
- *       500:
- *         description: Erro interno do servidor
  */
 router.get("/orders/:id", verifyToken, TaskController.taskListOrderId);
 
@@ -73,17 +69,18 @@ router.get("/orders/:id", verifyToken, TaskController.taskListOrderId);
  * @swagger
  * /orders/{id}/status:
  *   patch:
- *     summary: Atualizar status de um pedido (somente admin)
- *     tags: [Pedidos]
+ *     summary: Atualizar status do pedido (admin)
+ *     tags:
+ *       - Pedidos
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID do pedido
  *         schema:
  *           type: string
+ *         description: ID do pedido
  *     requestBody:
  *       required: true
  *       content:
@@ -93,14 +90,13 @@ router.get("/orders/:id", verifyToken, TaskController.taskListOrderId);
  *             properties:
  *               status:
  *                 type: string
- *                 description: Novo status do pedido
+ *                 enum: [pendente, pago, enviado, cancelado]
+ *                 example: "pendente"
  *     responses:
  *       200:
- *         description: Status atualizado com sucesso
+ *         description: Status do pedido atualizado
  *       404:
  *         description: Pedido não encontrado
- *       500:
- *         description: Erro interno do servidor
  */
 router.patch("/orders/:id/status", verifyToken, TaskController.taskUpdateStatusOrder);
 

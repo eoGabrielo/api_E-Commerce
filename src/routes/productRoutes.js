@@ -7,15 +7,18 @@ const TaskController = require("../controllers/productController");
  * @swagger
  * tags:
  *   name: Produtos
- *   description: Rotas para gerenciar produtos
+ *   description: Rotas para gerenciar produtos (CRUD completo)
  */
+
 
 /**
  * @swagger
  * /products:
  *   post:
- *     summary: Cria um novo produto
- *     tags: [Produtos]
+ *     summary: Criar novo produto
+ *     description: Adiciona um produto (requer autenticação)
+ *     tags:
+ *       - Produtos
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -24,27 +27,22 @@ const TaskController = require("../controllers/productController");
  *         application/json:
  *           schema:
  *             type: object
- *             required:
- *               - nome
- *               - descricao
- *               - preco
- *               - estoque
  *             properties:
  *               nome:
  *                 type: string
+ *                 example: "Iphone 16"
  *               descricao:
  *                 type: string
+ *                 example: "Celular tequinologi"
  *               preco:
  *                 type: number
+ *                 example: 1700
  *               estoque:
  *                 type: number
+ *                 example: 8
  *     responses:
  *       201:
- *         description: Produto criado com sucesso
- *       401:
- *         description: Token inválido ou ausente
- *       500:
- *         description: Erro interno do servidor
+ *         description: Produto criado
  */
 router.post("/products", verifyToken, TaskController.taskCreatedProduct);
 
@@ -52,13 +50,13 @@ router.post("/products", verifyToken, TaskController.taskCreatedProduct);
  * @swagger
  * /products:
  *   get:
- *     summary: Lista todos os produtos
- *     tags: [Produtos]
+ *     summary: Listar todos os produtos
+ *     description: Retorna todos os produtos cadastrados.
+ *     tags:
+ *       - Produtos
  *     responses:
  *       200:
- *         description: Lista de produtos retornada com sucesso
- *       500:
- *         description: Erro interno do servidor
+ *         description: Lista de produtos
  */
 router.get('/products', TaskController.taskGetProducts);
 
@@ -66,43 +64,43 @@ router.get('/products', TaskController.taskGetProducts);
  * @swagger
  * /products/{id}:
  *   get:
- *     summary: Retorna um produto pelo ID
- *     tags: [Produtos]
+ *     summary: Buscar produto por ID
+ *     tags:
+ *       - Produtos
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
+ *         required: true
  *         schema:
  *           type: string
- *         required: true
  *         description: ID do produto
  *     responses:
  *       200:
- *         description: Produto retornado com sucesso
- *       401:
- *         description: Token inválido ou ausente
+ *         description: Produto encontrado
  *       404:
  *         description: Produto não encontrado
- *       500:
- *         description: Erro interno do servidor
  */
+
 router.get('/products/:id', verifyToken, TaskController.taskGetProductId);
 
 /**
  * @swagger
  * /products/{id}:
  *   put:
- *     summary: Atualiza um produto completamente
- *     tags: [Produtos]
+ *     summary: Atualizar produto
+ *     description: Atualiza os dados de um produto pelo ID (requer autenticação)
+ *     tags:
+ *       - Produtos
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
+ *         required: true
  *         schema:
  *           type: string
- *         required: true
  *         description: ID do produto
  *     requestBody:
  *       required: true
@@ -121,13 +119,9 @@ router.get('/products/:id', verifyToken, TaskController.taskGetProductId);
  *                 type: number
  *     responses:
  *       200:
- *         description: Produto atualizado com sucesso
- *       401:
- *         description: Token inválido ou ausente
+ *         description: Produto atualizado
  *       404:
  *         description: Produto não encontrado
- *       500:
- *         description: Erro interno do servidor
  */
 router.put("/products/:id", verifyToken, TaskController.taskUpdateProductAll);
 
@@ -135,26 +129,24 @@ router.put("/products/:id", verifyToken, TaskController.taskUpdateProductAll);
  * @swagger
  * /products/{id}:
  *   delete:
- *     summary: Deleta um produto pelo ID
- *     tags: [Produtos]
+ *     summary: Deletar produto
+ *     description: Remove um produto pelo ID (requer autenticação)
+ *     tags:
+ *       - Produtos
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
+ *         required: true
  *         schema:
  *           type: string
- *         required: true
  *         description: ID do produto
  *     responses:
  *       200:
- *         description: Produto deletado com sucesso
- *       401:
- *         description: Token inválido ou ausente
+ *         description: Produto deletado
  *       404:
  *         description: Produto não encontrado
- *       500:
- *         description: Erro interno do servidor
  */
 router.delete("/products/:id", verifyToken, TaskController.taskDeleteProduct);
 
