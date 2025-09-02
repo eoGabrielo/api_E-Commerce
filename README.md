@@ -76,10 +76,10 @@ src/
 │  └─ Order.js
 │
 ├─ routes/             # Rotas → chamam os controllers
-│  ├─ auth.js
-│  ├─ products.js
-│  ├─ cart.js
-│  └─ orders.js
+│  ├─ userRoutes.js
+│  ├─ productRoutes.js
+│  ├─ cartRoutes.js
+│  └─ orderRoutes.js
 │
 ├─ middlewares/        # Middlewares (ex: autenticação)
 │  └─ auth.js
