@@ -7,12 +7,19 @@ const productRoutes = require("./routes/productRoutes"); //Import routas dos pro
 const cartRoutes = require("./routes/cartRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 
+
+
 dotenv.config(); //carrega variaveis do .env
 const app = express() //Usando as func do express na var "app."
 app.use(express.json()); //permite receber JSON no body
 app.use(cors()); //acesso de outros dominios
 
 app.use(userRoutes, productRoutes, cartRoutes, orderRoutes); // Ter acesso as rotas do sistema.
+
+//Swagger
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocs = require("./config/swagger");
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs)); // Rota para documentação
 
 //Rota teste
 app.get('/', (req, res) => {
