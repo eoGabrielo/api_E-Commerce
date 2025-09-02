@@ -2,7 +2,8 @@
 # 🛒 E-commerce API
 
 API de e-commerce construída com **Node.js**, **Express** e **MongoDB**, organizada na arquitetura **MVC** (Model-View-Controller).  
-O projeto inclui funcionalidades de **usuários, produtos, carrinho e pedidos**, além de autenticação JWT e proteção de rotas.
+O projeto inclui funcionalidades de **usuários, produtos, carrinho e pedidos**, além de autenticação JWT e proteção de rotas.  
+Este projeto foi desenvolvido como prática de backend e conta com documentação interativa via **Swagger**.
 
 ---
 
@@ -43,8 +44,19 @@ O projeto inclui funcionalidades de **usuários, produtos, carrinho e pedidos**,
 - **Bcrypt** → criptografia de senhas
 - **Cors** → habilitar requisições externas
 - **Dotenv** → variáveis de ambiente
+- **Swagger UI** → documentação interativa da API
 
 ---
+
+## 📌 Documentação da API (Swagger)
+
+Você pode acessar a documentação interativa da API com **Swagger** no seguinte link (O servidor precisa está rodando...):  
+
+```
+
+http://localhost:5000/api-docs
+
+```
 
 ## ⚡ Estrutura do Projeto (MVC)
 
@@ -78,12 +90,6 @@ src/
 └─ index.js            # Arquivo principal do servidor
 
 ````
-
-👉 **Fluxo MVC:**  
-- O usuário faz uma requisição para uma **rota**.  
-- Essa rota chama o **controller**, que contém a lógica.  
-- O **controller** utiliza os **models** para acessar ou alterar dados no banco.  
-- A resposta (View) volta para o cliente em formato **JSON**.  
 
 ---
 
@@ -127,7 +133,6 @@ src/
 
 ```bash
 git clone https://github.com/seu-usuario/ecommerce-api.git
-cd ecommerce-api
 ````
 
 2. Instale as dependências:
@@ -150,7 +155,13 @@ PORT=5000
 npm run dev
 ```
 
-5. Teste as rotas via Postman ou outro cliente HTTP.
+5. Acesse a documentação Swagger:
+
+```
+http://localhost:5000/api-docs
+```
+
+6. Teste as rotas via Postman ou Swagger UI.
 
 ---
 
@@ -160,5 +171,4 @@ npm run dev
   `Bearer SEU_TOKEN`.
 * Todos os dados sensíveis (senhas) são **criptografados**.
 * O carrinho é único por usuário, não é necessário criar/deletar manualmente.
-
----
+* Swagger permite testar endpoints sem precisar de Postman.
